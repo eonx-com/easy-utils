@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace EonX\EasyUtils;
 
-use EonX\EasyUtils\Exceptions\InvalidArgumentException;
 use EonX\EasyUtils\Interfaces\HasPriorityInterface;
 
 final class CollectorHelper
@@ -22,41 +21,7 @@ final class CollectorHelper
     /**
      * @param iterable<mixed> $items
      *
-     * @return iterable<mixed>
-     *
-     * @throws \EonX\EasyUtils\Exceptions\InvalidArgumentException
-     */
-    public static function ensureClass(iterable $items, string $class): iterable
-    {
-        foreach ($items as $item) {
-            if (($item instanceof $class) === false) {
-                throw new InvalidArgumentException(\sprintf(
-                    'Instance of %s expected, %s given',
-                    $class,
-                    \is_object($item) === false ? \gettype($item) : \get_class($item)
-                ));
-            }
-
-            yield $item;
-        }
-    }
-
-    /**
-     * @param iterable<mixed> $items
-     *
      * @return mixed[]
-     *
-     * @throws \EonX\EasyUtils\Exceptions\InvalidArgumentException
-     */
-    public static function ensureClassAsArray(iterable $items, string $class): array
-    {
-        return self::convertToArray(self::ensureClass($items, $class));
-    }
-
-    /**
-     * @param iterable<mixed> $items
-     *
-     * @return iterable<mixed>
      */
     public static function filterByClass(iterable $items, string $class): iterable
     {
@@ -79,11 +44,11 @@ final class CollectorHelper
     }
 
     /**
-     * @param iterable<mixed> $items
+     * @param mixed[] $items
      *
-     * @return iterable<mixed>
+     * @return mixed[]
      */
-    public static function orderHigherPriorityFirst(iterable $items): iterable
+    public static function orderHigherPriorityFirst(iterable $items): array
     {
         $items = self::convertToArray($items);
 
@@ -94,27 +59,15 @@ final class CollectorHelper
             return $secondPriority <=> $firstPriority;
         });
 
-        foreach ($items as $item) {
-            yield $item;
-        }
+        return $items;
     }
 
     /**
-     * @param iterable<mixed> $items
+     * @param mixed[] $items
      *
      * @return mixed[]
      */
-    public static function orderHigherPriorityFirstAsArray(iterable $items): array
-    {
-        return self::convertToArray(self::orderHigherPriorityFirst($items));
-    }
-
-    /**
-     * @param iterable<mixed> $items
-     *
-     * @return iterable<mixed>
-     */
-    public static function orderLowerPriorityFirst(iterable $items): iterable
+    public static function orderLowerPriorityFirst(iterable $items): array
     {
         $items = self::convertToArray($items);
 
@@ -125,18 +78,6 @@ final class CollectorHelper
             return $firstPriority <=> $secondPriority;
         });
 
-        foreach ($items as $item) {
-            yield $item;
-        }
-    }
-
-    /**
-     * @param iterable<mixed> $items
-     *
-     * @return mixed[]
-     */
-    public static function orderLowerPriorityFirstAsArray(iterable $items): array
-    {
-        return self::convertToArray(self::orderLowerPriorityFirst($items));
+        return $items;
     }
 }
