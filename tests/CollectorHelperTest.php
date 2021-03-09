@@ -5,23 +5,10 @@ declare(strict_types=1);
 namespace EonX\EasyUtils\Tests;
 
 use EonX\EasyUtils\CollectorHelper;
-use EonX\EasyUtils\Exceptions\InvalidArgumentException;
 use EonX\EasyUtils\Tests\Stubs\HasPriorityStub;
 
 final class CollectorHelperTest extends AbstractTestCase
 {
-    /**
-     * @return iterable<mixed>
-     */
-    public function providerTestEnsureClass(): iterable
-    {
-        yield 'basic type' => [[0], true];
-
-        yield 'basic object' => [[new \stdClass()], false];
-
-        yield 'interface based' => [[new HasPriorityStub(), new \stdClass()], true];
-    }
-
     /**
      * @return iterable<mixed>
      *
@@ -78,24 +65,6 @@ final class CollectorHelperTest extends AbstractTestCase
 
     /**
      * @param iterable<mixed> $items
-     *
-     * @dataProvider providerTestEnsureClass
-     */
-    public function testEnsureClass(iterable $items, bool $expectException, ?string $class = null): void
-    {
-        if ($expectException) {
-            $this->expectException(InvalidArgumentException::class);
-        }
-
-        // Convert to array so it goes through the generator
-        CollectorHelper::ensureClassAsArray($items, $class ?? \stdClass::class);
-
-        // If it reaches here, test is valid
-        self::assertTrue(true);
-    }
-
-    /**
-     * @param iterable<mixed> $items
      * @param null|class-string $class
      *
      * @dataProvider providerTestFilterByClass
@@ -120,7 +89,7 @@ final class CollectorHelperTest extends AbstractTestCase
      */
     public function testOrderHigherPriorityFirst(iterable $items, array $expected): void
     {
-        self::assertEquals($expected, CollectorHelper::orderHigherPriorityFirstAsArray($items));
+        self::assertEquals($expected, CollectorHelper::orderHigherPriorityFirst($items));
     }
 
     /**
@@ -131,7 +100,7 @@ final class CollectorHelperTest extends AbstractTestCase
      */
     public function testOrderLowerPriorityFirst(iterable $items, array $expected): void
     {
-        self::assertEquals($expected, CollectorHelper::orderLowerPriorityFirstAsArray($items));
+        self::assertEquals($expected, CollectorHelper::orderLowerPriorityFirst($items));
     }
 
     private function hasPriorityStub(?int $priority = null): HasPriorityStub
