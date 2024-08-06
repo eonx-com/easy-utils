@@ -1,9 +1,8 @@
 <?php
 declare(strict_types=1);
 
-namespace EonX\EasyUtils\Tests\Stub\Trait;
+namespace EonX\EasyUtils\Tests\Stub\Kernel;
 
-use EonX\EasyUtils\Tests\Stub\Kernel\KernelStub;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 trait KernelTrait

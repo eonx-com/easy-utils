@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace EonX\EasyUtils\SensitiveData\Transformer;
+namespace EonX\EasyUtils\SensitiveData\Hydrator;
 
 interface ObjectHydratorInterface
 {

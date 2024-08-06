@@ -6,7 +6,7 @@ namespace EonX\EasyUtils\Tests\Stub\Helper;
 use EonX\EasyUtils\Common\Helper\HasPriorityInterface;
 use EonX\EasyUtils\Common\Helper\HasPriorityTrait;
 
-final class HasPriorityStub implements HasPriorityInterface
+final class HasPriorityHelperStub implements HasPriorityInterface
 {
     use HasPriorityTrait;
 
